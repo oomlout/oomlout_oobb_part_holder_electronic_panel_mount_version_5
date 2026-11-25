@@ -1,0 +1,222 @@
+{
+  "configuration_title": "Side-mount box / XY-SMH",
+  "parts": {
+    "holder": {
+      "key": "holder",
+      "name": "Side-mount box",
+      "id": "oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth",
+      "quantity": 1
+    },
+    "device": {
+      "key": "device",
+      "name": "XY-SMH",
+      "id": "electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh",
+      "quantity": 1,
+      "md5": "fa4f157e3c957397f4b29266dd29f785",
+      "md5_6_alpha": "9rllh",
+      "short_label": "oom.lt/a/9rllh",
+      "identity_provenance": "OOMP panel-mount catalog record",
+      "short_url": "https://oom.lt/a/9rllh",
+      "source_url": "https://github.com/oomlout/oomp_electronic_panel_mount_version_5/tree/main/parts/electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh"
+    },
+    "plate": {
+      "key": "plate",
+      "name": "Rear cable plate",
+      "quantity": 1,
+      "id": "oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/back_plate"
+    },
+    "nut": {
+      "key": "nut",
+      "name": "M3 hex nut",
+      "id": "hardware_nut_m3",
+      "quantity": 2,
+      "md5_6_alpha": "3vb5b",
+      "md5": "632d2f1cf592d38bafebf6dcced02499",
+      "short_label": "oom.lt/a/3vb5b",
+      "short_url": "https://oom.lt/a/3vb5b",
+      "source_url": "https://github.com/oomlout/oomlout_oomp_version_1_messy/tree/main/parts/hardware_nut_m3"
+    },
+    "screw": {
+      "key": "screw",
+      "name": "M3 \u00d7 12 countersunk hex screw",
+      "id": "hardware_screw_countersunk_hex_head_black_m3_diameter_12_mm_length",
+      "quantity": 2,
+      "md5_6_alpha": "1qf1u",
+      "md5": "2c6fb230ab08b4e2319686abe673d7e1",
+      "short_label": "oom.lt/a/1qf1u",
+      "short_url": "https://oom.lt/a/1qf1u",
+      "source_url": "https://github.com/oomlout/oomp_hardware_screw_version_5/tree/main/parts/hardware_screw_countersunk_hex_head_black_m3_diameter_12_mm_length"
+    }
+  },
+  "printed_keys": [
+    "holder",
+    "plate"
+  ],
+  "physical_item_count": 7,
+  "steps": [
+    {
+      "key": "part_holder",
+      "title": "Operation 1",
+      "action": "Print the two pieces laid out in the box STL. Slide one M3 nut into the middle side slot on each body rail. Leave those slots empty when you need both M3 bores clear.",
+      "loose_parts": {
+        "holder": 1,
+        "nut": 2
+      }
+    },
+    {
+      "key": "aligned",
+      "title": "Operation 2",
+      "action": "With the device disconnected, align its body with the opening. Keep the bezel outside the holder.",
+      "loose_parts": {
+        "device": 1
+      }
+    },
+    {
+      "key": "seated",
+      "title": "Operation 3",
+      "action": "Press the body straight into the opening until the bezel sits flat. Check that the clips engage before mounting the holder.",
+      "loose_parts": {}
+    },
+    {
+      "key": "joined",
+      "title": "Operation 4",
+      "action": "Lay the wires in the bottom opening. Face the countersinks out and fit one M3 \u00d7 12 mm screw per side from the rear. For a patch panel, slide four M3 nuts from the wire opening into the plate.",
+      "loose_parts": {
+        "plate": 1,
+        "screw": 2
+      }
+    }
+  ],
+  "style": {
+    "page_mm": [
+      297,
+      210
+    ],
+    "margin_mm": 6,
+    "gutter_mm": 4,
+    "rows": 2,
+    "columns": 2,
+    "border": "000000",
+    "border_width_pt": 3,
+    "component_border_width_pt": 1.1,
+    "border_radius_mm": 3,
+    "thumbnail_height_mm": 8.5,
+    "quantity_shift_mm": 1,
+    "quantity_pt": 5.8,
+    "font_code_pt": 6.4,
+    "font_body_pt": 7,
+    "font_url_prefix_pt": 4.8
+  },
+  "book": {
+    "cover_title": "Side-mount box",
+    "cover_subtitle": "XY-SMH / 8 x 4 OOBB",
+    "project_name": "oomlout_oobb_part_holder_electronic_panel_mount_version_5",
+    "project_url": "https://github.com/oomlout/oomlout_oobb_part_holder_electronic_panel_mount_version_5",
+    "logo_svg": "oomlout-LOGO-unshaded-vector.svg",
+    "logo_symbol_subpaths": 3,
+    "summary_view": "joined",
+    "signature_pages": 4,
+    "summary_step": true,
+    "summary_title": "Printed part",
+    "hardware_title": "Device and fasteners",
+    "details_title": "Installation notes",
+    "viewer_layout": "a4-landscape-four-step",
+    "viewer_start": "page-03",
+    "details": [
+      "Front opening: 81.6 x 40.6 mm. Retaining shoulder: 3 mm.",
+      "Device envelope: 86 x 45 x 28 mm.",
+      "The gray envelope shows insertion direction. The catalog supplies dimensions only. Controls and clips are omitted.",
+      "The compact OOMP code identifies the purchased device. Its link opens the source catalog record.",
+      "The print STL lays the open body and 3 mm rear plate side by side. Two rear screws share one M3 bore per side.",
+      "Clip engagement and physical fit still need a sample print.",
+      "Regenerate the CAD, booklet and offline viewer with python make_all.py.",
+      "AI-generated CAD images and instructions. Errors possible.",
+      "Four optional M3 nuts slide sideways from the cable opening into the plate for a future patch panel."
+    ]
+  },
+  "production_stl_sha256": "9f4d0cea1b4184d1d2017fa107d2906971e7ff0a2c9f0be0d44c36b04a341ced",
+  "logo_sha256": "72918ba326599a1e6ae495ae4cabb51cc7a462035d35ee30de984229e30d9d67",
+  "body_stl_sha256": "81e2cf2bf73e8331c60e81a13a4d3afd482e80dfc712fff00ff8572a330b0966",
+  "back_plate_stl_sha256": "1cd8b4a6486f8c8a53b31c040fc54cc124399c8b7c3a34d7eab780966d28d783",
+  "summary_inventory": {
+    "printed": [
+      {
+        "key": "holder",
+        "name": "Side-mount box",
+        "id": "oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth",
+        "quantity": 1
+      },
+      {
+        "key": "plate",
+        "name": "Rear cable plate",
+        "quantity": 1,
+        "id": "oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/back_plate"
+      }
+    ],
+    "hardware": [
+      {
+        "key": "device",
+        "name": "XY-SMH",
+        "id": "electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh",
+        "quantity": 1,
+        "md5": "fa4f157e3c957397f4b29266dd29f785",
+        "md5_6_alpha": "9rllh",
+        "short_label": "oom.lt/a/9rllh",
+        "identity_provenance": "OOMP panel-mount catalog record",
+        "short_url": "https://oom.lt/a/9rllh",
+        "source_url": "https://github.com/oomlout/oomp_electronic_panel_mount_version_5/tree/main/parts/electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh"
+      },
+      {
+        "key": "nut",
+        "name": "M3 hex nut",
+        "id": "hardware_nut_m3",
+        "quantity": 2,
+        "md5_6_alpha": "3vb5b",
+        "md5": "632d2f1cf592d38bafebf6dcced02499",
+        "short_label": "oom.lt/a/3vb5b",
+        "short_url": "https://oom.lt/a/3vb5b",
+        "source_url": "https://github.com/oomlout/oomlout_oomp_version_1_messy/tree/main/parts/hardware_nut_m3"
+      },
+      {
+        "key": "screw",
+        "name": "M3 \u00d7 12 countersunk hex screw",
+        "id": "hardware_screw_countersunk_hex_head_black_m3_diameter_12_mm_length",
+        "quantity": 2,
+        "md5_6_alpha": "1qf1u",
+        "md5": "2c6fb230ab08b4e2319686abe673d7e1",
+        "short_label": "oom.lt/a/1qf1u",
+        "short_url": "https://oom.lt/a/1qf1u",
+        "source_url": "https://github.com/oomlout/oomp_hardware_screw_version_5/tree/main/parts/hardware_screw_countersunk_hex_head_black_m3_diameter_12_mm_length"
+      }
+    ]
+  },
+  "book_pages": [
+    {
+      "kind": "cover"
+    },
+    {
+      "kind": "details"
+    },
+    {
+      "kind": "instructions",
+      "group": 0
+    },
+    {
+      "kind": "summary",
+      "number": 5
+    },
+    {
+      "kind": "spacer"
+    },
+    {
+      "kind": "spacer"
+    },
+    {
+      "kind": "parts"
+    },
+    {
+      "kind": "back"
+    }
+  ],
+  "printed_piece_count": 2
+}

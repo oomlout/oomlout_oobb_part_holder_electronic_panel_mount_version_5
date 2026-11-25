@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+assembly_instructions.html text eol=lf
+*.stl binary
+*.glb binary
+*.pdf binary

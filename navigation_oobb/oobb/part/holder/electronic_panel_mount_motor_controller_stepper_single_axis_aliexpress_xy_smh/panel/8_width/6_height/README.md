@@ -1,0 +1,7 @@
+<!-- oobb-presentation:start -->
+# 6 height
+
+[Up one level](../)
+
+- [3 depth](../../../../../../../../parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_8_width_6_height_3_depth/)
+<!-- oobb-presentation:end -->

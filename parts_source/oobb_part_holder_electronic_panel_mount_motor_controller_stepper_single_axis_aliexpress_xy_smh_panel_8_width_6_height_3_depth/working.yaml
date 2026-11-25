@@ -1,0 +1,45 @@
+assembly_steps:
+- action: Print one holder using the 3D-print STL. Clear the opening and identify
+    the front face.
+  view: part_holder
+- action: With the device disconnected, align its body with the opening. Keep the
+    bezel outside the holder.
+  view: aligned
+- action: Press the body straight into the opening until the bezel sits flat. Check
+    that the clips engage before mounting the holder.
+  view: seated
+device_label: xy_smh
+oobb_details:
+  cavity_depth_mm: 29
+  cavity_height_mm: 46.0
+  cavity_width_mm: 87.0
+  corner_radius_mm: 7
+  depth: 3
+  depth_cutout_mm: 3
+  depth_mm: 28
+  edge_radius_mm: 1.5
+  height: 6
+  height_cutout_mm: 40.6
+  height_mm: 45
+  oobb_type: panel
+  run_scad: true
+  variant: panel
+  width: 8
+  width_cutout_mm: 81.6
+  width_mm: 86
+source_oomp_id: electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh
+taxonomy_1: oobb
+taxonomy_10: ''
+taxonomy_11: ''
+taxonomy_12: ''
+taxonomy_13: ''
+taxonomy_14: ''
+taxonomy_15: ''
+taxonomy_2: part
+taxonomy_3: holder
+taxonomy_4: electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh
+taxonomy_5: panel
+taxonomy_6: 8_width
+taxonomy_7: 6_height
+taxonomy_8: 3_depth
+taxonomy_9: ''

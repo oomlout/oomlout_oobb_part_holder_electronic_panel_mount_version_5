@@ -1,0 +1,65 @@
+assembly_steps:
+- action: Print the two pieces laid out in the box STL. Slide one M3 nut into the
+    middle side slot on each body rail. Leave those slots empty when you need both
+    M3 bores clear.
+  view: part_holder
+- action: With the device disconnected, align its body with the opening. Keep the
+    bezel outside the holder.
+  view: aligned
+- action: Press the body straight into the opening until the bezel sits flat. Check
+    that the clips engage before mounting the holder.
+  view: seated
+- action: Lay the wires in the bottom opening. Face the countersinks out and fit one
+    M3 × 12 mm screw per side from the rear. For a patch panel, slide four M3 nuts
+    from the wire opening into the plate.
+  view: joined
+device_label: xy_smh
+oobb_details:
+  back_plate_depth_mm: 3
+  body_depth_mm: 38
+  cavity_depth_mm: 29
+  cavity_height_mm: 46.0
+  cavity_width_mm: 87.0
+  corner_radius_mm: 7
+  depth: 41
+  depth_cutout_mm: 3
+  depth_mm: 28
+  edge_radius_mm: 1.5
+  embedded_nut_depth_mm: 3
+  future_mount_rows_mm:
+  - -22.5
+  - -7.5
+  future_mount_x_mm: 22.5
+  height: 4
+  height_cutout_mm: 40.6
+  height_mm: 45
+  join_nut_skin_mm: 1.5
+  join_screw_length_mm: 12
+  join_x_mm: 52.5
+  join_y_mm: 0
+  oobb_type: box_width_only
+  patch_nut_depth_mm: 2.5
+  run_scad: true
+  variant: box_width_only
+  width: 8
+  width_cutout_mm: 81.6
+  width_mm: 86
+  wire_bottom_y_mm: -29.5
+  wire_height_mm: 30
+  wire_width_mm: 30
+source_oomp_id: electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh
+taxonomy_1: oobb
+taxonomy_10: ''
+taxonomy_11: ''
+taxonomy_12: ''
+taxonomy_13: ''
+taxonomy_14: ''
+taxonomy_15: ''
+taxonomy_2: part
+taxonomy_3: holder
+taxonomy_4: electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh
+taxonomy_5: box_width_only
+taxonomy_6: 8_width
+taxonomy_7: 4_height
+taxonomy_8: 41_depth
+taxonomy_9: ''

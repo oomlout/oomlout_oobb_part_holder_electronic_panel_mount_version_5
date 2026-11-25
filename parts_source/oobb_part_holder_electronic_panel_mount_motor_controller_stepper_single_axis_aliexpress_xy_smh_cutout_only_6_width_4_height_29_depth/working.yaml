@@ -1,0 +1,44 @@
+assembly_steps:
+- action: Import the positive cutter alongside the block you want to machine or print.
+  view: angle
+- action: Align its narrow end with the outside face of the block. The wider pocket
+    extends inward along positive Z.
+  view: top
+- action: Subtract the cutter from the block. Inspect the opening and the retaining
+    shoulder in section before exporting.
+  view: angle
+device_label: xy_smh
+oobb_details:
+  cavity_depth_mm: 29
+  cavity_height_mm: 46.0
+  cavity_width_mm: 87.0
+  corner_radius_mm: 7
+  depth: 29
+  depth_cutout_mm: 3
+  depth_mm: 28
+  edge_radius_mm: 1.5
+  height: 4
+  height_cutout_mm: 40.6
+  height_mm: 45
+  oobb_type: cutout_only
+  run_scad: true
+  variant: cutout_only
+  width: 6
+  width_cutout_mm: 81.6
+  width_mm: 86
+source_oomp_id: electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh
+taxonomy_1: oobb
+taxonomy_10: ''
+taxonomy_11: ''
+taxonomy_12: ''
+taxonomy_13: ''
+taxonomy_14: ''
+taxonomy_15: ''
+taxonomy_2: part
+taxonomy_3: holder
+taxonomy_4: electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh
+taxonomy_5: cutout_only
+taxonomy_6: 6_width
+taxonomy_7: 4_height
+taxonomy_8: 29_depth
+taxonomy_9: ''
