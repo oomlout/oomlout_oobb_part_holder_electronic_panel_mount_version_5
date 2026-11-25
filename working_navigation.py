@@ -96,6 +96,31 @@ def part_lines(record, folder, leaf, page):
     return lines
 
 
+def catalog_rows(records, page):
+    devices = {}
+    for folder, record in records:
+        source_id = record["source_oomp_id"]
+        devices.setdefault(source_id, {})[record["taxonomy_5"]] = (folder, record)
+
+    headers = ["OOMP item", *NAMES.values()]
+    lines = ["| " + " | ".join(headers) + " |", "| " + " | ".join(["---"] * len(headers)) + " |"]
+    for source_id, variants in sorted(devices.items()):
+        _, device = next(iter(variants.values()))
+        label = device["device_label"].replace("_", "-").upper()
+        cells = [f"[{label}]({CATALOG}/tree/main/parts/{source_id})"]
+        for variant in NAMES:
+            if variant not in variants:
+                cells.append("—")
+                continue
+            folder, record = variants[variant]
+            details = record["oobb_details"]
+            size = f"{details['width']} × {details['height']} × {details['depth']:g} mm"
+            mesh = "true.stl" if variant == "cutout_only" else "3dpr.stl"
+            cells.append(f"[{size}]({relative(folder, page)}) · [STL]({relative(folder / mesh, page)})")
+        lines.append("| " + " | ".join(cells) + " |")
+    return lines
+
+
 def main(**kwargs):
     root = Path(kwargs.get("root", ".")).resolve()
     part_ids = kwargs.get("part_ids")
@@ -155,16 +180,9 @@ def main(**kwargs):
              "Run `python make_all.py` to rebuild the catalog, CAD, illustrations and instructions. [Build guide](BUILD.md)",
              "", "## Parts", "",
              "Choose a panel for an existing enclosure or an open-backed box with a removable cable plate. The width-only styles leave the top "
-             "and bottom edges free of front mounting rows. Choose the positive cutter to design your own enclosure.",
-             "", "| Device and design | OOBB grid | Depth | STL |", "| --- | --- | --- | --- |"]
-    for part_folder, part in records:
-        details = part["oobb_details"]
-        variant = details["variant"]
-        title = part["device_label"].replace("_", "-").upper() + " · " + NAMES[variant]
-        mesh = "true.stl" if variant == "cutout_only" else "3dpr.stl"
-        label = "CAD cutter" if variant == "cutout_only" else "Print layout" if variant == "box_width_only" else "Print"
-        lines.append(f"| [{title}]({relative(part_folder, page)}) | {details['width']} × {details['height']} | "
-                     f"{details['depth']:g} mm | [{label}]({relative(part_folder / mesh, page)}) |")
+             "and bottom edges free of front mounting rows. Choose the positive cutter to design your own enclosure.", "",
+             "Sizes are shown as grid width × grid height × depth in millimetres.", ""]
+    lines.extend(catalog_rows(records, page))
     lines.extend(["", "## Assembly", "", "### Four-sided panel", ""])
     lines.extend(assembly_lines(record, folder, page))
     box = next((pair for pair in records if pair[1]["taxonomy_5"] == "box_width_only"

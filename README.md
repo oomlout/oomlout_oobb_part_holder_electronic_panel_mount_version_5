@@ -25,12 +25,11 @@ Run `python make_all.py` to rebuild the catalog, CAD, illustrations and instruct
 
 Choose a panel for an existing enclosure or an open-backed box with a removable cable plate. The width-only styles leave the top and bottom edges free of front mounting rows. Choose the positive cutter to design your own enclosure.
 
-| Device and design | OOBB grid | Depth | STL |
-| --- | --- | --- | --- |
-| [XY-SMH · Side-mount box](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/) | 8 × 4 | 41 mm | [Print layout](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/3dpr.stl) |
-| [XY-SMH · Clip-in cutter](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_cutout_only_6_width_4_height_29_depth/) | 6 × 4 | 29 mm | [CAD cutter](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_cutout_only_6_width_4_height_29_depth/true.stl) |
-| [XY-SMH · Four-sided panel](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_8_width_6_height_3_depth/) | 8 × 6 | 3 mm | [Print](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_8_width_6_height_3_depth/3dpr.stl) |
-| [XY-SMH · Side-mount panel](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_width_only_8_width_4_height_3_depth/) | 8 × 4 | 3 mm | [Print](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_width_only_8_width_4_height_3_depth/3dpr.stl) |
+Sizes are shown as grid width × grid height × depth in millimetres.
+
+| OOMP item | Four-sided panel | Side-mount panel | Side-mount box | Clip-in cutter |
+| --- | --- | --- | --- | --- |
+| [XY-SMH](https://github.com/oomlout/oomp_electronic_panel_mount_version_5/tree/main/parts/electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh) | [8 × 6 × 3 mm](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_8_width_6_height_3_depth/) · [STL](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_8_width_6_height_3_depth/3dpr.stl) | [8 × 4 × 3 mm](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_width_only_8_width_4_height_3_depth/) · [STL](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_width_only_8_width_4_height_3_depth/3dpr.stl) | [8 × 4 × 41 mm](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/) · [STL](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/3dpr.stl) | [6 × 4 × 29 mm](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_cutout_only_6_width_4_height_29_depth/) · [STL](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_cutout_only_6_width_4_height_29_depth/true.stl) |
 
 ## Assembly
 
