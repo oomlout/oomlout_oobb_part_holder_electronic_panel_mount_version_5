@@ -17,7 +17,7 @@ difference() {
 			rotate(a = [0, 0, 0]) {
 				difference() {
 					union() {
-						oobb_rounded_rectangle_edges(radius = 7, radius_bottom = 1.5, radius_top = 1.5, size = [119, 59, 38]);
+						oobb_rounded_rectangle_edges(radius = 7, radius_bottom = 1.5, radius_top = 0, size = [119, 59, 38]);
 					}
 					union();
 				}

@@ -5,7 +5,7 @@ AI-generated CAD images and instructions. Errors possible.
 
 ## Summary
 
-An open-backed box with a removable U-shaped rear plate and side-loaded M3 nuts.
+An open-backed box with three interchangeable rear plates.
 
 This is an entirely AI-generated coding project. The source code is largely unreadable by humans. The generated files are included so others can use and modify the designs with their own AI tools.
 
@@ -24,20 +24,31 @@ This is an entirely AI-generated coding project. The source code is largely unre
 | Front opening | 81.6 × 40.6 mm |
 | Clip shoulder | 3 mm |
 
-The assembled depth includes a 38 mm open body and a 3 mm rear plate. The [print layout](3dpr.stl) places both pieces side by side. Separate files are available for [the body](body_3dpr.stl) and [the plate](back_plate_3dpr.stl).
+The assembled depth includes a 38 mm open body and a 3 mm rear plate. The [print layout](3dpr.stl) contains the body and bottom-opening plate side by side. Use the [body-only STL](body_3dpr.stl) with either alternate plate.
 
-![Both sides of the removable plate](back_plate_3dpr_presentation.png)
+The flat faces mate together, with a 1.5 mm edge radius on the front of the box and the outside of the rear plate. The two rear screws occupy one M3 through-bore on each side when fitted.
 
-The bottom-center cable opening spans two OOBB pitches. Four M3 holes around it accept side-loaded patch-panel nuts. The mounting bores pass through the body and rear plate. The two rear screws occupy one M3 bore on each side when fitted.
+### Rear plate options
+
+| Plate | Opening | Optional M3 nuts | Files |
+| --- | --- | --- | --- |
+| Bottom wire opening | 30 × 30 mm bottom wire exit | 4 | [Print STL](back_plate_3dpr.stl) · [Both faces](back_plate_3dpr_presentation.png) |
+| OOBB Electronics window | 20.25 × 20.25 mm electronics window at the top right, viewed from the rear | 2 | [Print STL](back_plate_electronics_3dpr.stl) · [Both faces](back_plate_electronics_3dpr_presentation.png) |
+| Both openings | 30 × 30 mm bottom wire exit and 20.25 × 20.25 mm electronics window at the top right, viewed from the rear | 6 | [Print STL](back_plate_both_3dpr.stl) · [Both faces](back_plate_both_3dpr_presentation.png) |
+
+Drop accessory nuts into the hex pockets from the rear. Fit the accessory and start its screws from the inside before installing the rear plate. The two nuts that secure the rear plate slide into the box rails from the sides.
+
+The electronics window and its two M3 mounting points use the lower pair of side pins from the 3 × 3 little spacer. [OOBB Electronics source](https://github.com/oomlout/oomlout_oobb_electronic_version_5/blob/main/working_scad.py)
+
+![Both faces of the dual-opening plate](back_plate_both_3dpr_presentation.png)
 
 <details>
 <summary>Complete OOMP metadata</summary>
 
 ```yaml
 assembly_steps:
-- action: Print the two pieces laid out in the box STL. Slide one M3 nut into the
-    middle side slot on each body rail. Leave those slots empty when you need both
-    M3 bores clear.
+- action: Print the body and your choice of rear plate. Slide one M3 nut into the
+    middle side slot on each body rail.
   view: part_holder
 - action: With the device disconnected, align its body with the opening. Keep the
     bezel outside the holder.
@@ -45,9 +56,9 @@ assembly_steps:
 - action: Press the body straight into the opening until the bezel sits flat. Check
     that the clips engage before mounting the holder.
   view: seated
-- action: Lay the wires in the bottom opening. Face the countersinks out and fit one
-    M3 × 12 mm screw per side from the rear. For a patch panel, slide four M3 nuts
-    from the wire opening into the plate.
+- action: If fitting an accessory, drop its M3 nuts into the plate from the rear and
+    fasten the accessory from inside. Route the wires, seat the flat faces together,
+    and fit two M3 × 12 mm countersunk screws from the rear.
   view: joined
 bip_39_2_word_array:
 - grace
@@ -113,6 +124,13 @@ oobb_details:
   depth_cutout_mm: 3
   depth_mm: 28
   edge_radius_mm: 1.5
+  electronics_center_mm:
+  - 30.0
+  - 15.0
+  electronics_corner_radius_mm: 3.75
+  electronics_nut_x_offset_mm: 15
+  electronics_nut_y_offset_mm: -7.5
+  electronics_window_mm: 20.25
   embedded_nut_depth_mm: 3
   future_mount_rows_mm:
   - -22.5
@@ -126,7 +144,7 @@ oobb_details:
   join_x_mm: 52.5
   join_y_mm: 0
   oobb_type: box_width_only
-  patch_nut_depth_mm: 2.5
+  patch_nut_depth_mm: 2.45
   run_scad: true
   variant: box_width_only
   width: 8
@@ -272,11 +290,11 @@ taxonomy_9: ''
 
 ## Parts
 
-One printed body, one rear plate, one [XY-SMH](https://github.com/oomlout/oomp_electronic_panel_mount_version_5/tree/main/parts/electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh), two M3 × 12 mm countersunk screws and two M3 hex nuts. Add four more M3 nuts when fitting a patch panel.
+One printed body, one rear plate, one [XY-SMH](https://github.com/oomlout/oomp_electronic_panel_mount_version_5/tree/main/parts/electronic_panel_mount_motor_controller_stepper_single_axis_86_mm_width_45_mm_height_28_mm_depth_aliexpress_xy_smh), two M3 × 12 mm countersunk screws and two M3 hex nuts. Add four M3 nuts for a bottom patch panel or two for an OOBB Electronics plate. Use six if fitting both accessories.
 
 ## Assembly
 
-1. Print the two pieces laid out in the box STL. Slide one M3 nut into the middle side slot on each body rail. Leave those slots empty when you need both M3 bores clear.
+1. Print the body and your choice of rear plate. Slide one M3 nut into the middle side slot on each body rail.
 
    <a href="assembly/cards/step_01.png"><img src="assembly/cards/step_01.png" width="310" alt="Installation step 1"></a>
 
@@ -288,7 +306,7 @@ One printed body, one rear plate, one [XY-SMH](https://github.com/oomlout/oomp_e
 
    <a href="assembly/cards/step_03.png"><img src="assembly/cards/step_03.png" width="310" alt="Installation step 3"></a>
 
-4. Lay the wires in the bottom opening. Face the countersinks out and fit one M3 × 12 mm screw per side from the rear. For a patch panel, slide four M3 nuts from the wire opening into the plate.
+4. If fitting an accessory, drop its M3 nuts into the plate from the rear and fasten the accessory from inside. Route the wires, seat the flat faces together, and fit two M3 × 12 mm countersunk screws from the rear.
 
    <a href="assembly/cards/step_04.png"><img src="assembly/cards/step_04.png" width="310" alt="Installation step 4"></a>
 

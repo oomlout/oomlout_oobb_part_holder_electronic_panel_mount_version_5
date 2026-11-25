@@ -20,9 +20,13 @@ class RearPlateSections(unittest.TestCase):
 
     def check_box(self, folder, d, mode):
         body = trimesh.load_mesh(folder / f"body_{mode}.stl")
-        plate = trimesh.load_mesh(folder / f"back_plate_{mode}.stl")
+        plates = {}
+        plates["bottom"] = trimesh.load_mesh(folder / f"back_plate_{mode}.stl")
+        plates["electronics"] = trimesh.load_mesh(folder / f"back_plate_electronics_{mode}.stl")
+        plates["both"] = trimesh.load_mesh(folder / f"back_plate_both_{mode}.stl")
+        plate = plates["bottom"]
         box = trimesh.load_mesh(folder / f"{mode}.stl")
-        for mesh in (body, plate, box):
+        for mesh in (body, box, *plates.values()):
             self.assertTrue(mesh.is_volume)
         self.assertAlmostEqual(plate.extents[2], 3)
         self.assertAlmostEqual(body.extents[2] + plate.extents[2], d["depth"])
@@ -55,7 +59,7 @@ class RearPlateSections(unittest.TestCase):
                     for angle in range(0, 360, 45):
                         a = math.radians(angle)
                         through_top.append([x+(radius-.05)*math.cos(a), -body.extents[1], z+(radius-.05)*math.sin(a)])
-        for mesh in (body, plate):
+        for mesh in (body, *plates.values()):
             self.assertFalse(mesh.ray.intersects_any(origins, [[0, 0, 1]]*len(origins)).any())
         self.assertFalse(body.ray.intersects_any(through_top, [[0, 1, 0]]*len(through_top)).any())
 
@@ -65,22 +69,44 @@ class RearPlateSections(unittest.TestCase):
         nut_z = body.extents[2] - d["join_nut_skin_mm"] - d["embedded_nut_depth_mm"]/2
         for side in (-1, 1):
             x = side*d["join_x_mm"]
-            self.assertFalse(plate.contains([[x+2.55, y, plate_depth-.1]])[0])
-            self.assertTrue(plate.contains([[x+2.55, y, .3]])[0])
+            for plate_mesh in plates.values():
+                self.assertFalse(plate_mesh.contains([[x+2.55, y, plate_depth-.1]])[0])
+                self.assertTrue(plate_mesh.contains([[x+2.55, y, .3]])[0])
             self.assertLess(d["depth"]-d["join_screw_length_mm"], nut_z-d["embedded_nut_depth_mm"]/2)
             self.check_slot(body, x, y, nut_z, side*(body.extents[0]/2-1), flat)
-            for row in d["future_mount_rows_mm"]:
-                x_patch = side*d["future_mount_x_mm"]
-                self.check_slot(plate, x_patch, row, plate_depth/2, side*(d["wire_width_mm"]/2+2), flat)
-                self.assertFalse(plate.ray.intersects_any([[x_patch, row, -1]], [[0, 0, 1]])[0])
-                land = side*(abs(x_patch)-4.5)
-                self.assertTrue(plate.contains([[land,row,.10], [land,row,plate_depth-.10]]).all())
+
+        half_width = body.extents[0]/2
+        outer = [half_width-.5, 4]
+        self.assertTrue(body.contains([outer + [body.extents[2]-.1]])[0])
+        self.assertFalse(body.contains([outer + [.1]])[0])
         top = d["wire_bottom_y_mm"] + d["wire_height_mm"]
-        opening = [[0, d["wire_bottom_y_mm"]+1, plate_depth/2], [0, top-.2, plate_depth/2]]
-        self.assertFalse(plate.contains(opening).any())
-        self.assertTrue(plate.contains([[0, top+.2, plate_depth/2]])[0])
-        self.assertTrue(plate.contains([[d["wire_width_mm"]/2-.3, top-.3, plate_depth/2]])[0])
+        bottom_opening = [[0, d["wire_bottom_y_mm"]+1, plate_depth/2], [0, top-.2, plate_depth/2]]
+        cx, cy = d["electronics_center_mm"]
+        half_window = d["electronics_window_mm"]/2
+        electronics_opening = [[cx, cy, plate_depth/2], [cx+half_window-.2, cy, plate_depth/2]]
+        for variant, plate_mesh in plates.items():
+            self.assertEqual(len(plate_mesh.split(only_watertight=False)), 1)
+            self.assertAlmostEqual(plate_mesh.extents[2], plate_depth)
+            self.assertTrue(plate_mesh.contains([outer + [.1]])[0])
+            self.assertFalse(plate_mesh.contains([outer + [plate_depth-.1]])[0])
+            self.assertEqual(plate_mesh.contains(bottom_opening).tolist(), [variant == "electronics"]*2)
+            self.assertEqual(plate_mesh.contains(electronics_opening).tolist(), [variant == "bottom"]*2)
+            self.assertTrue(plate_mesh.contains([[0, top+.2, plate_depth/2]])[0])
+            self.assertTrue(plate_mesh.contains([[cx+half_window-.2, cy+half_window-.2, plate_depth/2]])[0])
+            for side in (-1, 1):
+                x_patch = side*d["future_mount_x_mm"]
+                for y_patch in d["future_mount_rows_mm"]:
+                    self.check_rear_nut(plate_mesh, x_patch, y_patch, plate_depth, variant != "electronics")
+                x_pin = cx + side*d["electronics_nut_x_offset_mm"]
+                y_pin = cy+d["electronics_nut_y_offset_mm"]
+                self.check_rear_nut(plate_mesh, x_pin, y_pin, plate_depth, variant != "bottom")
         self.assertFalse(body.contains([[0, 0, body.extents[2]-.3]])[0])
+
+    def check_rear_nut(self, mesh, x, y, depth, present):
+        # The bore is open all the way through. A hex corner clears only from the rear.
+        self.assertEqual(mesh.ray.intersects_any([[x, y, -1]], [[0, 0, 1]])[0], not present)
+        self.assertEqual(mesh.contains([[x+2.5, y, depth-.1]])[0], not present)
+        self.assertTrue(mesh.contains([[x+2.5, y, .1], [x, y+3.8, depth/2]]).all())
 
     def check_slot(self, mesh, x, y, z, end, half_flat):
         points = [[x+(end-x)*i/12, y+j, z] for i in range(13) for j in (-half_flat+.08, 0, half_flat-.08)]

@@ -11,6 +11,7 @@ import oobb
 import opsc
 import yaml
 from components.oobb_nut.working import describe as nut_description
+from working_oomp_populate import REAR_PLATES
 
 
 def draw_cutout(thing, **kwargs):
@@ -70,10 +71,12 @@ def draw_top_holes(thing, **kwargs):
 def draw_plate(thing, **kwargs):
     radius = kwargs.get("corner_radius_mm", 7)
     rim = kwargs.get("edge_radius_mm", 1.5)
+    rim_top = kwargs.get("edge_radius_top_mm", rim)
+    rim_bottom = kwargs.get("edge_radius_bottom_mm", rim)
     pitch, allowance = oobb.gv("osp"), oobb.gv("osp_minus")
     size = [kwargs["width"]*pitch-allowance, kwargs["height"]*pitch-allowance, kwargs["depth"]]
     oobb.append_full(thing, type="positive", shape="oobb_rounded_rectangle_rounded", size=size,
-                     radius=radius, radius_rounded=rim, radius_top=rim, radius_bottom=rim, pos=[0, 0, 0])
+                     radius=radius, radius_rounded=rim, radius_top=rim_top, radius_bottom=rim_bottom, pos=[0, 0, 0])
 
 
 def draw_holder(thing, **kwargs):
@@ -93,9 +96,9 @@ def get_panel(thing, **kwargs):
 
 def draw_side_nut(thing, **kwargs):
     x, y, z = kwargs["x"], kwargs["y"], kwargs["z"]
-    depth = kwargs.get("nut_pocket_depth_mm", kwargs["embedded_nut_depth_mm"])
+    depth = kwargs["embedded_nut_depth_mm"]
     edge = (kwargs["width"]*oobb.gv("osp") - oobb.gv("osp_minus"))/2
-    mouth_x = kwargs.get("nut_mouth_x_mm", math.copysign(edge + 1, x))
+    mouth_x = math.copysign(edge + 1, x)
     length = abs(mouth_x - x)
     native_slot = any(field["name"] == "clearance_side_length" for field in nut_description()["variables"])
     for mode in ("true", "3dpr"):
@@ -119,26 +122,56 @@ def get_box_width_only(thing, **kwargs):
         raise ValueError("Rear screw does not span the captive nut")
     # Stagger facets at the perpendicular bore intersections for STL export.
     kwargs.setdefault("front_bore_rotation", 180 / kwargs.get("resolution", 64))
-    kwargs.update(depth=body, relief_depth_mm=body, front_hole_depth_mm=body)
+    kwargs.update(depth=body, relief_depth_mm=body, front_hole_depth_mm=body, edge_radius_top_mm=0)
     draw_holder(thing, **kwargs)
     draw_top_holes(thing, **kwargs)
     for x in (-kwargs["join_x_mm"], kwargs["join_x_mm"]):
         draw_side_nut(thing, x=x, y=kwargs["join_y_mm"], z=body-skin-nut_depth, **kwargs)
 
 
-def get_back_plate(thing, **kwargs):
+def draw_rear_nut(thing, **kwargs):
+    x, y = kwargs["x"], kwargs["y"]
     depth = kwargs["back_plate_depth_mm"]
     nut_depth = kwargs["patch_nut_depth_mm"]
+    oobb.append_full(thing, type="negative", shape="oobb_nut", radius_name="m3",
+                     clearance="top", overhang=True, depth=nut_depth, pos=[x, y, depth-nut_depth])
+    oobb.append_full(thing, type="negative", shape="oobb_hole", radius_name="m3",
+                     depth=depth, pos=[x, y, 0])
+
+
+def draw_bottom_opening(thing, **kwargs):
+    depth = kwargs["back_plate_depth_mm"]
     slot_width = kwargs["wire_width_mm"]
     slot_radius = kwargs.get("wire_corner_radius_mm", 7)
     slot_top = kwargs["wire_bottom_y_mm"] + kwargs["wire_height_mm"]
     bottom = kwargs["wire_bottom_y_mm"] - slot_radius - 1
-    kwargs["depth"] = depth
+    oobb.append_full(thing, type="negative", shape="rounded_rectangle", r=slot_radius,
+                     size=[slot_width, slot_top-bottom, depth+2], pos=[0, (slot_top+bottom)/2, -1])
+    for x in (-kwargs["future_mount_x_mm"], kwargs["future_mount_x_mm"]):
+        for y in kwargs["future_mount_rows_mm"]:
+            draw_rear_nut(thing, x=x, y=y, **kwargs)
+
+
+def draw_electronics_opening(thing, **kwargs):
+    depth = kwargs["back_plate_depth_mm"]
+    center_x, center_y = kwargs["electronics_center_mm"]
+    window = kwargs["electronics_window_mm"]
+    radius = kwargs["electronics_corner_radius_mm"]
+    dx = kwargs["electronics_nut_x_offset_mm"]
+    dy = kwargs["electronics_nut_y_offset_mm"]
+    oobb.append_full(thing, type="negative", shape="rounded_rectangle", r=radius,
+                     size=[window, window, depth+2], pos=[center_x, center_y, -1])
+    for x in (center_x-dx, center_x+dx):
+        draw_rear_nut(thing, x=x, y=center_y+dy, **kwargs)
+
+
+def get_back_plate(thing, **kwargs):
+    depth = kwargs["back_plate_depth_mm"]
+    plate = kwargs.pop("rear_plate")
+    kwargs.update(depth=depth, edge_radius_bottom_mm=0)
     draw_plate(thing, **kwargs)
     kwargs.setdefault("front_bore_rotation", 180 / kwargs.get("resolution", 64))
     draw_front_holes(thing, **kwargs)
-    oobb.append_full(thing, type="negative", shape="rounded_rectangle", r=slot_radius,
-                     size=[slot_width, slot_top-bottom, depth+2], pos=[0, (slot_top+bottom)/2, -1])
     y = kwargs["join_y_mm"]
     for x in (-kwargs["join_x_mm"], kwargs["join_x_mm"]):
         oobb.append_full(thing, type="negative", shape="oobb_screw_countersunk", radius_name="m3",
@@ -146,12 +179,10 @@ def get_back_plate(thing, **kwargs):
         head_height = oobb.gv("screw_countersunk_depth_m3", "true")
         oobb.append_full(thing, type="negative", shape="cylinder", inclusion="true",
                          r1=1.5, r2=3, h=head_height, pos=[x, y, depth-head_height])
-    for x in (-kwargs["future_mount_x_mm"], kwargs["future_mount_x_mm"]):
-        for y in kwargs["future_mount_rows_mm"]:
-            draw_side_nut(thing, x=x, y=y, z=(depth-nut_depth)/2, nut_pocket_depth_mm=nut_depth,
-                          nut_mouth_x_mm=0, **kwargs)
-            oobb.append_full(thing, type="negative", shape="oobb_hole", radius_name="m3",
-                             depth=depth, pos=[x, y, 0])
+    if plate["bottom"]:
+        draw_bottom_opening(thing, **kwargs)
+    if plate["electronics"]:
+        draw_electronics_opening(thing, **kwargs)
 
 
 def get_cutout_only(thing, **kwargs):
@@ -178,16 +209,17 @@ def main(**kwargs):
         part = yaml.safe_load((folder / "working.yaml").read_text(encoding="utf-8"))
         details = part["oobb_details"]
         box = details["variant"] == "box_width_only"
-        pieces = {"body_" if box else "": builders[details["oobb_type"]]}
+        pieces = {"body_" if box else "": (builders[details["oobb_type"]], {})}
         if box:
-            pieces["back_plate_"] = get_back_plate
+            for prefix, plate in REAR_PLATES.items():
+                pieces[prefix] = (get_back_plate, dict(rear_plate=plate))
         with TemporaryDirectory(dir=folder) as temporary:
             outputs = []
             staging = Path(temporary) / "cad"
             staging.mkdir()
-            for prefix, draw in pieces.items():
+            for prefix, (draw, options) in pieces.items():
                 thing = oobb.get_default_thing(type=details["oobb_type"])
-                draw(thing, resolution=resolution, **details)
+                draw(thing, resolution=resolution, **details, **options)
                 for mode in modes:
                     scad = staging / f"{prefix}{mode}.scad"
                     opsc.opsc_make_object(str(scad), thing["components"], mode=mode, resolution=resolution)

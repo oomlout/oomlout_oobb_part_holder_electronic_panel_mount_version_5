@@ -7,6 +7,7 @@ from urllib.parse import unquote, urlsplit
 
 import fitz
 import yaml
+from working_oomp_populate import REAR_PLATES
 
 
 def sha256(path):
@@ -25,10 +26,11 @@ def check_readme(page):
         path = page.parent / unquote(target.path)
         if not path.exists():
             raise FileNotFoundError(f"Broken link in {page}: {url}")
-        if target.fragment == "assembly":
+        if target.fragment in ("assembly", "rear-plate-options"):
             destination = path / "README.md" if path.is_dir() else path
-            if "## Assembly" not in destination.read_text(encoding="utf-8"):
-                raise ValueError(f"Missing Assembly heading at {destination}")
+            heading = target.fragment.replace("-", " ").capitalize()
+            if f"## {heading}" not in destination.read_text(encoding="utf-8"):
+                raise ValueError(f"Missing {heading} heading at {destination}")
 
 
 def main(**kwargs):
@@ -61,10 +63,14 @@ def main(**kwargs):
         if record["taxonomy_5"] == "box_width_only":
             for mode in ("true", "3dpr"):
                 for extension in ("scad", "stl"):
-                    for piece in ("body", "back_plate"):
-                        if not (folder / f"{piece}_{mode}.{extension}").stat().st_size:
-                            raise ValueError(f"Empty {piece} CAD")
-            for name in ("body_3dpr.stl", "back_plate_3dpr.stl"):
+                    for prefix in ("body_", *REAR_PLATES):
+                        if not (folder / f"{prefix}{mode}.{extension}").stat().st_size:
+                            raise ValueError(f"Empty {prefix}{mode}.{extension}")
+                for prefix in REAR_PLATES:
+                    if not (folder / f"{prefix}{mode}_presentation.png").stat().st_size:
+                        raise ValueError(f"Missing preview for {prefix}{mode}")
+            for prefix in ("body_", *REAR_PLATES):
+                name = f"{prefix}3dpr.stl"
                 if sha256(folder / name) != sha256(leaves[taxonomy_id] / name):
                     raise ValueError(f"Stale navigation mesh {name}")
         if not cutter:
@@ -75,8 +81,9 @@ def main(**kwargs):
             if record["taxonomy_5"] == "box_width_only":
                 if manifest["body_stl_sha256"] != sha256(folder / "body_3dpr.stl"):
                     raise ValueError("Stale body in box booklet")
-                if manifest["back_plate_stl_sha256"] != sha256(folder / "back_plate_3dpr.stl"):
-                    raise ValueError("Stale rear plate in box booklet")
+                for prefix in REAR_PLATES:
+                    if manifest["rear_plate_stl_sha256"][prefix] != sha256(folder / f"{prefix}3dpr.stl"):
+                        raise ValueError(f"Stale rear plate in box booklet: {prefix}")
             report = json.loads((assembly / "validation.json").read_text(encoding="utf-8"))
             for ext in ("pdf", "html"):
                 if sha256(assembly / f"assembly_instructions.{ext}") != report[f"{ext}_sha256"]:

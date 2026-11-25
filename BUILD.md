@@ -62,9 +62,12 @@ The catalog box depth is the assembled depth. The XY-SMH box is 41 mm deep,
 including its 38 mm open body and 3 mm removable rear plate. The nominal
 `true.scad` and `true.stl` show the plate installed. In `3dpr.stl` both
 pieces sit flat on the bed with an 8 mm gap. To print a replacement part, use
-`body_3dpr.stl` or `back_plate_3dpr.stl`. All holder plates and the body have
-7 mm plan corners and 1.5 mm rim radii. The clip shoulder and the CAD cutter
-use the original device cutout dimensions.
+`body_3dpr.stl` and the rear plate STL of your choice. The default
+`back_plate_3dpr.stl` has a bottom wire exit, `back_plate_electronics_3dpr.stl`
+has the electronics window, and `back_plate_both_3dpr.stl` has both.
+All panels and box pieces have 7 mm plan corners. The box front and rear plate
+outside have 1.5 mm rim radii. The two mating rims are flat. The standalone
+panels have rounded rims on both faces.
 
 Slide one M3 nut in from the outside of each side rail. Fasten the rear plate
 with two M3 × 12 mm countersunk screws from the rear. The plate and body share
@@ -73,16 +76,24 @@ its side. With the fasteners removed, those two bores are also clear for the
 full 41 mm. The bottom-center wire opening measures 30 mm across and 30 mm up
 from the lower edge, with 7 mm upper corner radii.
 
-Four M3 through-holes flank the wire opening on 15 mm rows. Each accepts a
-side-loaded nut for a future patch panel. Feed the nuts from the wire opening.
-The 2.5 mm pockets leave nominal 0.25 mm retaining skins on each face of the
-3 mm plate, with local overhang relief at the bore. Both sets of loading slots run parallel to the hex flats and
-measure 5.50 mm nominal or 5.75 mm in print mode. Every screw and nut primitive
-uses `overhang=True`. The screw illustration uses the OOMP M3 × 12 countersunk
-display mesh from `oomp_hardware_screw_version_5`.
+Four M3 through-holes flank the bottom opening on 15 mm rows. The top-right
+electronics window follows the 20.25 × 20.25 mm OOBB Electronics little spacer
+with 3.75 mm corner radii. Two M3 through-holes match its lower side-pin pair,
+30 mm apart and 7.5 mm below the window center. The dual-opening plate keeps
+both mounting patterns. [OOBB Electronics spacer source](https://github.com/oomlout/oomlout_oobb_electronic_version_5/blob/main/working_scad.py)
 
-To check both delivered mesh modes for nut access, slot width, countersink
-direction, screw reach and the open cable path, run
+Drop accessory nuts into the rear face using the open hex pockets made with
+`clearance="top"`. Each pocket starts 0.55 mm from the inside face and includes
+local overhang relief at the bore. Start the accessory screws from inside the
+plate. Check the accessory outline against the enclosure when fitting it.
+The two nuts holding the plate slide into the body rails using
+`clearance="side"`. The guide slots run across the nut flats and measure
+5.50 mm nominal or 5.75 mm in print mode. Both nut styles and the rear
+countersinks use `overhang=True`. The screw illustration uses the OOMP
+M3 × 12 countersunk catalog mesh.
+
+To check both mesh modes for the flush joint, nut access, slot width,
+countersinks, mounting bores and both cable paths, run
 `python tests/test_rear_plate.py` with `trimesh` and `rtree` installed.
 
 Vertical M6 centers lie at 15, 45, 75 mm and successive odd multiples of 15 mm

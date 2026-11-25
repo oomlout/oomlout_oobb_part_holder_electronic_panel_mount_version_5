@@ -57,7 +57,7 @@
     {
       "key": "part_holder",
       "title": "Operation 1",
-      "action": "Print the two pieces laid out in the box STL. Slide one M3 nut into the middle side slot on each body rail. Leave those slots empty when you need both M3 bores clear.",
+      "action": "Print the body and your choice of rear plate. Slide one M3 nut into the middle side slot on each body rail.",
       "loose_parts": {
         "holder": 1,
         "nut": 2
@@ -80,7 +80,7 @@
     {
       "key": "joined",
       "title": "Operation 4",
-      "action": "Lay the wires in the bottom opening. Face the countersinks out and fit one M3 \u00d7 12 mm screw per side from the rear. For a patch panel, slide four M3 nuts from the wire opening into the plate.",
+      "action": "If fitting an accessory, drop its M3 nuts into the plate from the rear and fasten the accessory from inside. Route the wires, seat the flat faces together, and fit two M3 \u00d7 12 mm countersunk screws from the rear.",
       "loose_parts": {
         "plate": 1,
         "screw": 2
@@ -127,17 +127,22 @@
       "Device envelope: 86 x 45 x 28 mm.",
       "The gray envelope shows insertion direction. The catalog supplies dimensions only. Controls and clips are omitted.",
       "The compact OOMP code identifies the purchased device. Its link opens the source catalog record.",
-      "The print STL lays the open body and 3 mm rear plate side by side. Two rear screws share one M3 bore per side.",
+      "The default print STL lays the body and bottom-opening plate side by side. Two M3 screws hold any of the three plates.",
       "Clip engagement and physical fit still need a sample print.",
       "Regenerate the CAD, booklet and offline viewer with python make_all.py.",
       "AI-generated CAD images and instructions. Errors possible.",
-      "Four optional M3 nuts slide sideways from the cable opening into the plate for a future patch panel."
+      "Choose the bottom wire opening, the small top-right OOBB Electronics window, or both. The flat faces mate together.",
+      "Load four optional M3 patch-panel nuts at the bottom opening and two M3 accessory nuts at the electronics window, as applicable. Drop them in from the rear."
     ]
   },
-  "production_stl_sha256": "9f4d0cea1b4184d1d2017fa107d2906971e7ff0a2c9f0be0d44c36b04a341ced",
+  "production_stl_sha256": "b2346623d53fc455b0ed63ce11c8a5198b928c6b24d6e4f8226956a5ddadd7f5",
   "logo_sha256": "72918ba326599a1e6ae495ae4cabb51cc7a462035d35ee30de984229e30d9d67",
-  "body_stl_sha256": "81e2cf2bf73e8331c60e81a13a4d3afd482e80dfc712fff00ff8572a330b0966",
-  "back_plate_stl_sha256": "1cd8b4a6486f8c8a53b31c040fc54cc124399c8b7c3a34d7eab780966d28d783",
+  "body_stl_sha256": "d03bde7e0a7846e2a95752536fa1a83a2e8f9316ce40cfddc47ae9d3dfa8f452",
+  "rear_plate_stl_sha256": {
+    "back_plate_": "4bbece1df17431c284fae41bc77aba260ccadbafe4544dfb5275463158ed1f30",
+    "back_plate_electronics_": "a5c0817b97457a1bd3a97e67d70be2c76b119460343902829709c6a0a632715c",
+    "back_plate_both_": "1ed356f39af7b7256b5489794539855b0a55c165fd11d8b64c29e518e3103fab"
+  },
   "summary_inventory": {
     "printed": [
       {

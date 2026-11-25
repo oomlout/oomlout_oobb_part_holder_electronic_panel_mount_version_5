@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 import yaml
 
 from presentation import assembly_booklet, assembly_viewer
+from working_oomp_populate import REAR_PLATES
 
 ROOT = Path(__file__).resolve().parent
 NOTICE = "AI-generated CAD images and instructions. Errors possible."
@@ -41,6 +42,16 @@ def render_jobs(records, **kwargs):
                              source=str(folder / (f"body_{mode}.stl" if box else f"{mode}.stl")),
                              back_plate=str(folder / f"back_plate_{mode}.stl"),
                              views=views))
+            if box:
+                for prefix in REAR_PLATES:
+                    if prefix == "back_plate_":
+                        continue
+                    plate_dir = directory / prefix.rstrip("_")
+                    plate_dir.mkdir(exist_ok=True)
+                    jobs.append(dict(key=folder.name + "/" + prefix.rstrip("_"), directory=str(plate_dir),
+                                     dimensions=record["oobb_details"], source=str(folder / f"body_{mode}.stl"),
+                                     back_plate=str(folder / f"{prefix}{mode}.stl"),
+                                     views=["inside_plate", "outside_plate"]))
     job_path = cache / "render_jobs.json"
     job_path.write_text(json.dumps(jobs, indent=2), encoding="utf-8")
     subprocess.run([blender, "--background", "--factory-startup", "--python-exit-code", "1",
@@ -57,15 +68,16 @@ def font(size, **kwargs):
 
 
 def catalog_sheet(folder, record, raw, mode, **kwargs):
-    plate = kwargs.get("back_plate", False)
+    prefix = kwargs.get("plate_prefix", "")
     d = record["oobb_details"]
     sheet = Image.new("RGB", (1440, 730), "#faf9f6")
     draw = ImageDraw.Draw(sheet)
     name = NAMES[d["variant"]]
     views, captions = ("angle", "top"), ("Three-quarter view", "Front face")
     depth = d["depth"]
-    if plate:
-        name, views, captions = "Removable rear plate", ("inside_plate", "outside_plate"), ("Inside mounting face", "Rear countersinks")
+    if prefix:
+        name = REAR_PLATES[prefix]["label"]
+        views, captions = ("inside_plate", "outside_plate"), ("Flat inside face", "Rear nut pockets and countersinks")
         depth = d["back_plate_depth_mm"]
     elif d["variant"] == "box_width_only":
         views, captions = ("angle", "rear"), ("Open body", "Rear plate fitted")
@@ -83,7 +95,6 @@ def catalog_sheet(folder, record, raw, mode, **kwargs):
     draw.text((52, 680), NOTICE, fill="#3c4446", font=font(18))
     draw.text((1140, 680), "Print clearances" if mode == "3dpr" else "Nominal geometry",
               fill="#3c4446", font=font(18))
-    prefix = "back_plate_" if plate else ""
     sheet.save(folder / f"{prefix}{mode}_presentation.png", optimize=True)
 
 
@@ -153,10 +164,14 @@ def assembly_book(folder, record, raw, **kwargs):
     if d["variant"] == "box_width_only":
         book["hardware_title"] = "Device and fasteners"
         book["summary_view"] = "joined"
-        book["details"][4] = "The print STL lays the open body and 3 mm rear plate side by side. Two rear screws share one M3 bore per side."
-        book["details"].append("Four optional M3 nuts slide sideways from the cable opening into the plate for a future patch panel.")
+        book["details"][4] = "The default print STL lays the body and bottom-opening plate side by side. Two M3 screws hold any of the three plates."
+        book["details"].append("Choose the bottom wire opening, the small top-right OOBB Electronics window, or both. The flat faces mate together.")
+        book["details"].append("Load four optional M3 patch-panel nuts at the bottom opening and two M3 accessory nuts at the electronics window, as applicable. Drop them in from the rear.")
         data["body_stl_sha256"] = hashlib.sha256((folder / "body_3dpr.stl").read_bytes()).hexdigest()
-        data["back_plate_stl_sha256"] = hashlib.sha256((folder / "back_plate_3dpr.stl").read_bytes()).hexdigest()
+        data["rear_plate_stl_sha256"] = {
+            prefix: hashlib.sha256((folder / f"{prefix}3dpr.stl").read_bytes()).hexdigest()
+            for prefix in REAR_PLATES
+        }
     for key, item in parts.items():
         if sum(s["loose_parts"].get(key, 0) for s in steps) != item["quantity"]:
             raise ValueError(f"Incorrect assembly quantity for {key}")
@@ -182,9 +197,12 @@ def main(**kwargs):
     cache = render_jobs(records, **kwargs)
     for folder, record in records:
         for mode in ("true", "3dpr"):
-            catalog_sheet(folder, record, cache / folder.name / mode, mode)
+            raw = cache / folder.name / mode
+            catalog_sheet(folder, record, raw, mode)
             if record["taxonomy_5"] == "box_width_only":
-                catalog_sheet(folder, record, cache / folder.name / mode, mode, back_plate=True)
+                for prefix in REAR_PLATES:
+                    plate_raw = raw if prefix == "back_plate_" else raw / prefix.rstrip("_")
+                    catalog_sheet(folder, record, plate_raw, mode, plate_prefix=prefix)
         if record["taxonomy_5"] != "cutout_only":
             assembly_book(folder, record, cache / folder.name / "3dpr", **kwargs)
 
