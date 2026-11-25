@@ -34,7 +34,7 @@ Choose a panel for an existing enclosure or an open-backed box with a removable 
 
 ## Assembly
 
-The [XY-SMH four-sided panel](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_8_width_6_height_3_depth/#assembly) illustrates the clip-in sequence. Each holder page includes its own views and printable booklet.
+### Four-sided panel
 
 1. Print one holder using the 3D-print STL. Clear the opening and identify the front face.
 
@@ -51,4 +51,26 @@ The [XY-SMH four-sided panel](parts/oobb_part_holder_electronic_panel_mount_moto
 The gray shape represents the catalog device envelope. Clip travel and physical fit still need a sample print.
 
 [Offline HTML viewer](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_8_width_6_height_3_depth/assembly/assembly_instructions.html) · [Printable PDF](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_panel_8_width_6_height_3_depth/assembly/assembly_instructions.pdf)
+
+### Side-mount box with rear plate
+
+1. Print the two pieces laid out in the box STL. Slide one M3 nut into the middle side slot on each body rail. Leave those slots empty when you need both M3 bores clear.
+
+   <a href="parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/cards/step_01.png"><img src="parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/cards/step_01.png" width="310" alt="Installation step 1"></a>
+
+2. With the device disconnected, align its body with the opening. Keep the bezel outside the holder.
+
+   <a href="parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/cards/step_02.png"><img src="parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/cards/step_02.png" width="310" alt="Installation step 2"></a>
+
+3. Press the body straight into the opening until the bezel sits flat. Check that the clips engage before mounting the holder.
+
+   <a href="parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/cards/step_03.png"><img src="parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/cards/step_03.png" width="310" alt="Installation step 3"></a>
+
+4. Lay the wires in the bottom opening. Face the countersinks out and fit one M3 × 12 mm screw per side from the rear. For a patch panel, slide four M3 nuts from the wire opening into the plate.
+
+   <a href="parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/cards/step_04.png"><img src="parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/cards/step_04.png" width="310" alt="Installation step 4"></a>
+
+The gray shape represents the catalog device envelope. Clip travel and physical fit still need a sample print.
+
+[Offline HTML viewer](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/assembly_instructions.html) · [Printable PDF](parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/assembly/assembly_instructions.pdf)
 <!-- oobb-presentation:end -->

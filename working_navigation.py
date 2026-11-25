@@ -165,9 +165,14 @@ def main(**kwargs):
         label = "CAD cutter" if variant == "cutout_only" else "Print layout" if variant == "box_width_only" else "Print"
         lines.append(f"| [{title}]({relative(part_folder, page)}) | {details['width']} × {details['height']} | "
                      f"{details['depth']:g} mm | [{label}]({relative(part_folder / mesh, page)}) |")
-    lines.extend(["", "## Assembly", "", f"The [{name}]({part_url}#assembly) illustrates the clip-in sequence. "
-             "Each holder page includes its own views and printable booklet.", ""])
+    lines.extend(["", "## Assembly", "", "### Four-sided panel", ""])
     lines.extend(assembly_lines(record, folder, page))
+    box = next((pair for pair in records if pair[1]["taxonomy_5"] == "box_width_only"
+                and pair[1]["source_oomp_id"] == record["source_oomp_id"]), None)
+    if box:
+        box_folder, box_record = box
+        lines.extend(["", "### Side-mount box with rear plate", ""])
+        lines.extend(assembly_lines(box_record, box_folder, page))
     write_page(page, lines)
 
 
