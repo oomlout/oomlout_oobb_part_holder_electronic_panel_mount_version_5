@@ -164,7 +164,7 @@ def assembly_book(folder, record, raw, **kwargs):
     if d["variant"] == "box_width_only":
         book["hardware_title"] = "Device and fasteners"
         book["summary_view"] = "joined"
-        book["details"][4] = "The default print STL lays the body and bottom-opening plate side by side. Two M3 screws hold any of the three plates."
+        book["details"][4] = "The print STL contains the body and all three rear plates. Choose one plate for assembly and secure it with two M3 screws."
         book["details"].append("Choose the bottom wire opening, the small top-right OOBB Electronics window, or both. The flat faces mate together.")
         book["details"].append("Load four optional M3 patch-panel nuts at the bottom opening and two M3 accessory nuts at the electronics window, as applicable. Drop them in from the rear.")
         data["body_stl_sha256"] = hashlib.sha256((folder / "body_3dpr.stl").read_bytes()).hexdigest()

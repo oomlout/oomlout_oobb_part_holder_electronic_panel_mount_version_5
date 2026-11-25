@@ -30,13 +30,19 @@ class RearPlateSections(unittest.TestCase):
             self.assertTrue(mesh.is_volume)
         self.assertAlmostEqual(plate.extents[2], 3)
         self.assertAlmostEqual(body.extents[2] + plate.extents[2], d["depth"])
-        pieces = sorted(box.split(only_watertight=False), key=lambda item: item.extents[2])
+        pieces = box.split(only_watertight=False)
         if mode == "3dpr":
-            self.assertEqual(len(pieces), 2)
-            for placed, single in zip(pieces, (plate, body)):
+            self.assertEqual(len(pieces), 4)
+            for placed, single in zip(sorted(pieces, key=lambda mesh: mesh.volume),
+                                      sorted((body, *plates.values()), key=lambda mesh: mesh.volume)):
+                self.assertTrue(placed.is_volume)
                 self.assertAlmostEqual(placed.bounds[0, 2], 0)
                 self.assertAlmostEqual(placed.volume, single.volume, places=2)
-            self.assertGreater(pieces[0].bounds[0, 1], pieces[1].bounds[1, 1])
+            for index, left in enumerate(pieces):
+                for right in pieces[index+1:]:
+                    gap = max(max(left.bounds[0, axis]-right.bounds[1, axis],
+                                  right.bounds[0, axis]-left.bounds[1, axis]) for axis in (0, 1))
+                    self.assertGreater(gap, 0)
         else:
             self.assertEqual(len(pieces), 1)
             self.assertAlmostEqual(box.extents[2], d["depth"])

@@ -24,7 +24,7 @@ This is an entirely AI-generated coding project. The source code is largely unre
 | Front opening | 81.6 × 40.6 mm |
 | Clip shoulder | 3 mm |
 
-The assembled depth includes a 38 mm open body and a 3 mm rear plate. The [print layout](../../../../../../../../../parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/3dpr.stl) contains the body and bottom-opening plate side by side. Use the [body-only STL](../../../../../../../../../parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/body_3dpr.stl) with either alternate plate.
+The assembled depth includes a 38 mm open body and a 3 mm rear plate. The [print layout](../../../../../../../../../parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/3dpr.stl) contains the body and all three rear plates as separate pieces on the bed. For a single configuration, use the [body-only STL](../../../../../../../../../parts/oobb_part_holder_electronic_panel_mount_motor_controller_stepper_single_axis_aliexpress_xy_smh_box_width_only_8_width_4_height_41_depth/body_3dpr.stl) and one plate STL below.
 
 The flat faces mate together, with a 1.5 mm edge radius on the front of the box and the outside of the rear plate. The two rear screws occupy one M3 through-bore on each side when fitted.
 

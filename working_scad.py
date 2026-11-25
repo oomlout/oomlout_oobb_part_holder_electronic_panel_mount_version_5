@@ -232,14 +232,25 @@ def main(**kwargs):
             if box:
                 for mode in modes:
                     body = (staging / f"body_{mode}.scad").read_text(encoding="utf-8")
-                    plate = (staging / f"back_plate_{mode}.scad").read_text(encoding="utf-8")
-                    offset = [0, 0, details["body_depth_mm"]]
-                    if mode == "3dpr":
-                        height = details["height"] * oobb.gv("osp") - oobb.gv("osp_minus")
-                        offset = [0, height + layout_gap, 0]
+                    source = [f"module body() {{\n{body}\n}}\n"]
+                    placements = ["body();\n"]
+                    prefixes = REAR_PLATES if mode == "3dpr" else ("back_plate_",)
+                    pitch, allowance = oobb.gv("osp"), oobb.gv("osp_minus")
+                    width = details["width"] * pitch - allowance
+                    height = details["height"] * pitch - allowance
+                    for index, prefix in enumerate(prefixes):
+                        plate = (staging / f"{prefix}{mode}.scad").read_text(encoding="utf-8")
+                        module = prefix.rstrip("_") if mode == "3dpr" else "rear_plate"
+                        source.append(f"module {module}() {{\n{plate}\n}}\n")
+                        if mode == "3dpr":
+                            # Turn the three plates a quarter turn so the set fits a smaller bed.
+                            x = (index - (len(prefixes) - 1) / 2) * (height + layout_gap)
+                            y = (width + height) / 2 + layout_gap
+                            placements.append(f"translate([{x}, {y}, 0]) rotate([0, 0, 90]) {module}();\n")
+                        else:
+                            placements.append(f"translate([0, 0, {details['body_depth_mm']}]) {module}();\n")
                     scad = staging / f"{mode}.scad"
-                    scad.write_text(f"module body() {{\n{body}\n}}\nmodule rear_plate() {{\n{plate}\n}}\n"
-                                    f"body();\ntranslate({offset}) rear_plate();\n", encoding="utf-8")
+                    scad.write_text("".join(source + placements), encoding="utf-8")
                     outputs.append(scad)
             if generate_stl:
                 for scad in outputs.copy():

@@ -60,9 +60,10 @@ for the device and its clips. Confirm them on a physical fit sample.
 
 The catalog box depth is the assembled depth. The XY-SMH box is 41 mm deep,
 including its 38 mm open body and 3 mm removable rear plate. The nominal
-`true.scad` and `true.stl` show the plate installed. In `3dpr.stl` both
-pieces sit flat on the bed with an 8 mm gap. To print a replacement part, use
-`body_3dpr.stl` and the rear plate STL of your choice. The default
+`true.scad` and `true.stl` show the bottom-opening plate installed.
+The `3dpr.scad` and `3dpr.stl` print layout puts the body and all three rear
+plates flat on the bed, with 8 mm between adjacent pieces. To print only one
+configuration, use `body_3dpr.stl` and the rear plate STL of your choice. The default
 `back_plate_3dpr.stl` has a bottom wire exit, `back_plate_electronics_3dpr.stl`
 has the electronics window, and `back_plate_both_3dpr.stl` has both.
 All panels and box pieces have 7 mm plan corners. The box front and rear plate

@@ -127,7 +127,7 @@
       "Device envelope: 86 x 45 x 28 mm.",
       "The gray envelope shows insertion direction. The catalog supplies dimensions only. Controls and clips are omitted.",
       "The compact OOMP code identifies the purchased device. Its link opens the source catalog record.",
-      "The default print STL lays the body and bottom-opening plate side by side. Two M3 screws hold any of the three plates.",
+      "The print STL contains the body and all three rear plates. Choose one plate for assembly and secure it with two M3 screws.",
       "Clip engagement and physical fit still need a sample print.",
       "Regenerate the CAD, booklet and offline viewer with python make_all.py.",
       "AI-generated CAD images and instructions. Errors possible.",
@@ -135,7 +135,7 @@
       "Load four optional M3 patch-panel nuts at the bottom opening and two M3 accessory nuts at the electronics window, as applicable. Drop them in from the rear."
     ]
   },
-  "production_stl_sha256": "b2346623d53fc455b0ed63ce11c8a5198b928c6b24d6e4f8226956a5ddadd7f5",
+  "production_stl_sha256": "8baf2713679a7b8fa64dc8169ad3fa78b061bc1e08fd1396f3d8095e2052b84f",
   "logo_sha256": "72918ba326599a1e6ae495ae4cabb51cc7a462035d35ee30de984229e30d9d67",
   "body_stl_sha256": "d03bde7e0a7846e2a95752536fa1a83a2e8f9316ce40cfddc47ae9d3dfa8f452",
   "rear_plate_stl_sha256": {

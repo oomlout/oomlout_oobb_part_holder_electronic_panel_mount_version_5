@@ -77,8 +77,9 @@ def part_lines(record, folder, leaf, page):
     if variant == "box_width_only":
         lines.extend([f"The assembled depth includes a {d['body_depth_mm']:g} mm open body and a "
                       f"{d['back_plate_depth_mm']:g} mm rear plate. The [print layout]({relative(folder/'3dpr.stl',page)}) "
-                      f"contains the body and bottom-opening plate side by side. Use the "
-                      f"[body-only STL]({relative(folder/'body_3dpr.stl',page)}) with either alternate plate.", "",
+                      f"contains the body and all three rear plates as separate pieces on the bed. "
+                      f"For a single configuration, use the [body-only STL]({relative(folder/'body_3dpr.stl',page)}) "
+                      "and one plate STL below.", "",
                       "The flat faces mate together, with a 1.5 mm edge radius on the front of the box and the outside of the rear plate. "
                       "The two rear screws occupy one M3 through-bore on each side when fitted.", "",
                       "### Rear plate options", "",
